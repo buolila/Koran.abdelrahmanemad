@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القرآن الكريم - تسجيل الدخول</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+<style>
+body{
+    font-family:'Amiri', serif;
+    margin:0;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    direction: rtl;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+#loginContainer{
+    background:#fff;
+    padding:40px 30px;
+    border-radius:15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align:center;
+    width:350px;
+    animation: fadeIn 1s ease;
+}
+#loginContainer input{
+    width:100%;
+    padding:12px 10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+#loginContainer button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    background:#0d6efd;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+#loginContainer button:hover{
+    background:#0056b3;
+}
+#loginMessage{
+    color:red;
+    margin-top:10px;
+    font-size:14px;
+}
+@keyframes fadeIn{
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+.container{
+    display:none;
+    padding:20px;
+    max-width:900px;
+    margin:auto;
+    background:#f4f4f4;
+    border-radius:12px;
+}
+header{
+    background:#0d6efd;
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-size:24px;
+    border-radius:8px;
+}
+.ayah{
+    background:white;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    font-size:22px;
+    line-height:2;
+}
+.full-player{
+    margin-top:30px;
+    padding:20px;
+    background:white;
+    border-radius:12px;
+}
+audio{
+    width:100%;
+    margin-top:10px;
+}
+select{
+    width:100%;
+    padding:10px;
+    margin-bottom:15px;
+    font-size:18px;
+}
+#visitorCount{
+    margin:15px 0;
+    font-size:18px;
+    color:#0d6efd;
+}
+</style>
+
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "OmJmvqVB1NIyTSDrV",
+      });
+    })();
+</script>
+
+</head>
+<body>
+
+<div id="loginContainer">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="username" placeholder="اسم المستخدم">
+    <input type="email" id="usermail" placeholder="الإيميل">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    <button id="loginBtn" onclick="sendMail()">دخول</button>
+    <p id="loginMessage"></p> 
+</div>
+
+<div class="container" id="mainContainer">
+<header>📖 القرآن الكريم</header>
+<p id="welcomeUser"></p>
+<p id="visitorCount">عدد الزوار: 0</p>
+
+<select id="playMode">
+    <option value="full">📖 قراءة سليمة (السورة كاملة)</option>
+    <option value="separate">🔹 قراءة مقطعة (آية آية)</option>
+</select>
+
+<select id="reciterSelect">
+<option value="ar.alafasy">مشاري العفاسي</option>
+<option value="ar.abdulbasitmurattal">عبدالباسط عبدالصمد</option>
+<option value="ar.mahermuaiqly">ماهر المعيقلي</option>
+<option value="ar.saoodshuraym">سعود الشريم</option>
+<option value="ar.muhammadayyoub">محمد أيوب</option>
+</select>
+
+<select id="surahSelect"></select>
+
+<div id="ayahContainer"></div>
+
+<div class="full-player">
+<h2>🎧 قراءة السورة كاملة</h2>
+<audio id="fullSurahPlayer" controls></audio>
+</div>
+</div>
+
+<script>
+// ------------------- تسجيل الدخول وعد الزوار -------------------
+const loginContainer = document.getElementById("loginContainer");
+const loginBtn = document.getElementById("loginBtn");
+const loginMessage = document.getElementById("loginMessage");
+const mainContainer = document.getElementById("mainContainer");
+const welcomeUser = document.getElementById("welcomeUser");
+const visitorCountElem = document.getElementById("visitorCount");
+
+let visitors = [];
+
+loginBtn.addEventListener("click", () => {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if(username && password){
+        visitors.push(username);
+
+        loginContainer.style.display = "none";
+        mainContainer.style.display = "block";
+        welcomeUser.textContent = "مرحباً بك: " + username;
+        visitorCountElem.textContent = "عدد الزوار: " + visitors.length;
+
+        const header = document.querySelector("header");
+        header.textContent = `📖 القرآن الكريم - مرحباً بك ${username}`;
+    } else {
+        loginMessage.textContent = "من فضلك أدخل اسم المستخدم وكلمة المرور";
+    }
+});
+
+// ------------------- كود القرآن -------------------
+const surahSelect = document.getElementById("surahSelect");
+const reciterSelect = document.getElementById("reciterSelect");
+const ayahContainer = document.getElementById("ayahContainer");
+const fullSurahPlayer = document.getElementById("fullSurahPlayer");
+const playMode = document.getElementById("playMode");
+
+let currentSurahAudios = [];
+let currentIndex = 0;
+
+// تحميل السور
+fetch("https://api.alquran.cloud/v1/surah")
+.then(res => res.json())
+.then(data => {
+    data.data.forEach(surah => {
+        let option = document.createElement("option");
+        option.value = surah.number;
+        option.textContent = surah.number + " - " + surah.name;
+        surahSelect.appendChild(option);
+    });
+});
+
+surahSelect.addEventListener("change", loadSurah);
+reciterSelect.addEventListener("change", loadSurah);
+playMode.addEventListener("change", loadSurah);
+
+function loadSurah(){
+    let surahNumber = surahSelect.value;
+    let reciter = reciterSelect.value;
+    if(!surahNumber) return;
+
+    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${reciter}`)
+    .then(res => res.json())
+    .then(data => {
+        ayahContainer.innerHTML = "";
+        currentSurahAudios = [];
+
+        data.data.ayahs.forEach((ayah,index)=>{
+            currentSurahAudios.push(ayah.audio);
+            let div = document.createElement("div");
+            div.className = "ayah";
+            div.innerHTML = ayah.text;
+
+            if(playMode.value === "separate"){
+                let audio = document.createElement("audio");
+                audio.controls = true;
+                audio.src = ayah.audio;
+                div.appendChild(audio);
+
+                if(index===0){
+                    setTimeout(()=>audio.play().catch(()=>{}),500);
+                }
+            }
+            ayahContainer.appendChild(div);
+        });
+
+        if(playMode.value==="full") playFullSurah();
+        else { fullSurahPlayer.pause(); fullSurahPlayer.src=""; }
+    });
+}
+
+function playFullSurah(){
+    if(currentSurahAudios.length===0) return;
+    currentIndex=0;
+    fullSurahPlayer.src = currentSurahAudios[currentIndex];
+    fullSurahPlayer.play().catch(()=>{});
+    fullSurahPlayer.onended = function(){
+        currentIndex++;
+        if(currentIndex<currentSurahAudios.length){
+            fullSurahPlayer.src=currentSurahAudios[currentIndex];
+            fullSurahPlayer.play().catch(()=>{});
+        }
+    }
+}
+</script>
+<script>
+    function sendMail()
+    {
+        const name = document.getElementById("username");
+        const mail = document.getElementById("usermail");
+        
+        emailjs.send("service_6z59c5o","template_f83tfgh",{
+            name: name.value,
+            email: mail.value,
+        });
+    }
+</script>
+</body>
+</html>
