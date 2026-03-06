@@ -18,6 +18,17 @@ body{
     background: url('unnamed (2).jpg') no-repeat center center fixed;
     background-size: cover;
 }
+    body::before{
+    content: "";
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.5); /* 0.5 تعني شفافية 50% */
+    z-index:1;
+}
+
 #loginContainer{
     background:#fff;
     padding:40px 30px;
@@ -275,6 +286,7 @@ function playFullSurah(){
 </body>
 
 </html>
+
 
 
 
