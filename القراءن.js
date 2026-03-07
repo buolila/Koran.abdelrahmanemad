@@ -11,7 +11,7 @@ const visitorCountElem = document.getElementById("visitorCount");
 let visitorsCount = localStorage.getItem("visitorsCount");
 
 if(!visitorsCount){
-    visitorsCount = 0;
+    visitorsCount = 1000000000;
 }
 
 loginBtn.addEventListener("click", () => {
@@ -40,4 +40,5 @@ loginBtn.addEventListener("click", () => {
     } else {
         loginMessage.textContent = "من فضلك أدخل اسم المستخدم وكلمة المرور";
     }
+
 });
