@@ -1,16 +1,17 @@
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>القرآن الكريم - تسجيل الدخول</title>
+<title>القرآن الكريم</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-<link href="./download.png" rel="icon">
 
 <style>
 body{
     font-family:'Amiri', serif;
     margin:0;
-    /* background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); */
     direction: rtl;
     display:flex;
     justify-content:center;
@@ -19,56 +20,15 @@ body{
     background: url('./bg.jpg') no-repeat center center fixed;
     background-size: cover;
 }
-body::before{
-    content: "";
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color: rgba(0,0,0,0.5); /* 0.5 تعني شفافية 50% */
-    z-index: -9;
-}
 
 #loginContainer{
     background:#fff;
-    padding:40px 30px;
+    padding:30px;
     border-radius:15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     text-align:center;
-    width:350px;
-    animation: fadeIn 1s ease;
+    width:300px;
 }
-#loginContainer input{
-    width:100%;
-    padding:12px 10px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
-#loginContainer button{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    background:#0d6efd;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-}
-#loginContainer button:hover{
-    background:#0056b3;
-}
-#loginMessage{
-    color:red;
-    margin-top:10px;
-    font-size:14px;
-}
-@keyframes fadeIn{
-    from {opacity:0; transform: translateY(-20px);}
-    to {opacity:1; transform: translateY(0);}
-}
+
 .container{
     display:none;
     padding:20px;
@@ -77,311 +37,153 @@ body::before{
     background:#f4f4f4;
     border-radius:12px;
 }
+
 header{
     background:#0d6efd;
     color:white;
     text-align:center;
     padding:15px;
-    font-size:24px;
+    font-size:22px;
     border-radius:8px;
 }
+
 .ayah{
     background:white;
     padding:15px;
     margin-bottom:10px;
     border-radius:10px;
     font-size:22px;
-    line-height:2;
 }
-.full-player{
-    margin-top:30px;
-    padding:20px;
-    background:white;
-    border-radius:12px;
-}
+
 audio{
     width:100%;
     margin-top:10px;
 }
+
 select{
     width:100%;
     padding:10px;
     margin-bottom:15px;
-    font-size:18px;
-}
-#visitorCount{
-    margin:15px 0;
-    font-size:18px;
-    color:#0d6efd;
 }
 </style>
-
-<script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-    (function(){
-      emailjs.init({
-        publicKey: "OmJmvqVB1NIyTSDrV",
-      });
-    })();
-</script>
-
 </head>
+
 <body>
 
 <div id="loginContainer">
     <h2>تسجيل الدخول</h2>
-    <input type="text" id="username" placeholder="اسم المستخدم">
-    <input type="email" id="usermail" placeholder="الإيميل">
-    <input type="password" id="password" placeholder="كلمة المرور">
-        
-    <button id="loginBtn" onclick="sendMail()">دخول</button>
-    <p id="loginMessage">"المستخدم العزيز بعد الدخول على الموقع سوف ترسلك رسالة اكتب مميزات الموقع وأهداف الموقع."</p> 
+    <input type="text" id="username" placeholder="اسم المستخدم"><br><br>
+    <input type="password" id="password" placeholder="كلمة المرور"><br><br>
+    <button id="loginBtn">دخول</button>
+    <p id="loginMessage"></p>
 </div>
 
 <div class="container" id="mainContainer">
 <header>📖 القرآن الكريم</header>
-<p id="welcomeUser"></p>
-<p id="visitorCount">عدد الزوار: 0</p>
-
-<select id="playMode">
-    <option value="full">📖 قراءة سليمة (السورة كاملة)</option>
-    <option value="separate">🔹 قراءة مقطعة (آية آية)</option>
-</select>
 
 <select id="reciterSelect">
-<option value="ar.alafasy">مشاري راشد العفاسي</option>
-<option value="ar.abdulbasitmurattal">عبدالباسط عبدالصمد</option>
-<option value="ar.abdulbasitmujawwad">عبدالباسط عبدالصمد (مجود)</option>
-<option value="ar.mahermuaiqly">ماهر المعيقلي</option>
-<option value="ar.saoodshuraym">سعود الشريم</option>
-<option value="ar.abdurrahmaansudais">عبدالرحمن السديس</option>
-<option value="ar.yasseraldossary">ياسر الدوسري</option>
-<option value="ar.ahmedalajmi">أحمد العجمي</option>
-<option value="ar.husary">محمود خليل الحصري</option>
-<option value="ar.husarymujawwad">محمود خليل الحصري (مجود)</option>
-<option value="ar.minshawi">محمد صديق المنشاوي</option>
-<option value="ar.minshawimujawwad">محمد صديق المنشاوي (مجود)</option>
-<option value="ar.muhammadayyoub">محمد أيوب</option>
-<option value="ar.faresabbad">فارس عباد</option>
-<option value="ar.abdullahbasfar">عبدالله بصفر</option>
-<option value="ar.haniarrifai">هاني الرفاعي</option>
-<option value="ar.salahbukhatir">صلاح بوخاطر</option>
-<option value="ar.nasseralqatami">ناصر القطامي</option>
-<option value="ar.saadalghamdi">سعد الغامدي</option>
-<option value="ar.idrisabkar">إدريس أبكر</option>
-<option value="ar.khalidjalil">خالد الجليل</option>
-<option value="ar.abdullahkamel">عبدالله كامل</option>
-<option value="ar.muhammadjibreel">محمد جبريل</option>
-<option value="ar.abdullahaljuhani">عبدالله الجهني</option>
-<option value="ar.alihudhaify">علي الحذيفي</option>
-<option value="ar.ibrahimalakhdar">إبراهيم الأخضر</option>
-<option value="ar.muhammadluhaidan">محمد اللحيدان</option>
-<option value="ar.ahmedneana">أحمد نعينع</option>
-<option value="ar.mustafaismail">مصطفى إسماعيل</option>
-<option value="ar.mohamedrefaat">محمد رفعت</option>
-<option value="ar.mahmoudalibanna">محمود علي البنا</option>
-<option value="ar.abdullahkhayyat">عبدالله خياط</option>
-<option value="ar.abdullahawad">عبدالله عواد الجهني</option>
-<option value="ar.yusufkalo">يوسف كالو</option>
-<option value="ar.muhammadtaha">محمد طه الجنيد</option>
-<option value="ar.ahmedalhawashi">أحمد الحواشي</option>
-<option value="ar.abdulazizalzarani">عبدالعزيز الزهراني</option>
-<option value="ar.abdulrahmanalosi">عبدالرحمن العوسي</option>
-<option value="ar.mahmoudkhalil">محمود خليل القارئ</option>
-<option value="ar.abdullahmatrood">عبدالله المطرود</option>
-<option value="ar.abdulrahmanalsudais">عبدالرحمن السديس</option>
-<option value="ar.misharyrashid">مشاري راشد</option>
-<option value="ar.abdulazizalabdullatif">عبدالعزيز عبداللطيف</option>
-<option value="ar.ahmedaltrabulsi">أحمد الطرابلسي</option>
-<option value="ar.hazzaalbalushi">هزاع البلوشي</option>
-<option value="ar.abdullahalmusleh">عبدالله المصلح</option>
-<option value="ar.abdullahbasalamah">عبدالله با سلامة</option>
-<option value="ar.mohamedalbarak">محمد البراك</option>
-<option value="ar.saudalshuraim">سعود الشريم</option>
-<option value="ar.abdullahalharbi">عبدالله الحربي</option>
-<option value="ar.abdulrahmanalhudhaifi">عبدالرحمن الحذيفي</option>
-<option value="ar.aliabdurrahman">علي عبدالرحمن</option>
-<option value="ar.muhammadalhussary">محمد الحصري</option>
-<option value="ar.yasseralqahtani">ياسر القحطاني</option>
-<option value="ar.abdullahalqasimi">عبدالله القاسمي</option>
-<option value="ar.abdullahalansari">عبدالله الأنصاري</option>
-<option value="ar.abdullahalmutairi">عبدالله المطيري</option>
-<option value="ar.abdulrahmanalshatri">عبدالرحمن الشاطري</option>
-<option value="ar.ahmedalkhudair">أحمد الخضير</option>
-<option value="ar.abdulrahmanalghamdi">عبدالرحمن الغامدي</option>
-<option value="ar.mohamedalsaeed">محمد السعيد</option>
-<option value="ar.abdullahalsharif">عبدالله الشريف</option>
-<option value="ar.abdullahalmulla">عبدالله الملا</option>
-<option value="ar.abdullahalqahtani">عبدالله القحطاني</option>
-<option value="ar.abdulrahmanalfahad">عبدالرحمن الفهد</option>
-<option value="ar.mohamedalqahtani">محمد القحطاني</option>
-<option value="ar.abdulrahmanalmutairi">عبدالرحمن المطيري</option>
-<option value="ar.abdullahalharithy">عبدالله الحارثي</option>
-<option value="ar.mohamedalharbi">محمد الحربي</option>
-<option value="ar.abdulazizalmutairi">عبدالعزيز المطيري</option>
-<option value="ar.abdullahalqaidi">عبدالله القعيدي</option>
-<option value="ar.mohamedalansari">محمد الأنصاري</option>
-<option value="ar.abdulrahmanalqahtani">عبدالرحمن القحطاني</option>
-<option value="ar.abdullahalshammari">عبدالله الشمري</option>
-<option value="ar.mohamedalshammari">محمد الشمري</option>
-<option value="ar.abdulrahmanalshammari">عبدالرحمن الشمري</option>
-<option value="ar.abdullahalotaibi">عبدالله العتيبي</option>
-<option value="ar.mohamedalotaibi">محمد العتيبي</option>
-<option value="ar.abdulrahmanalotaibi">عبدالرحمن العتيبي</option>
-<option value="ar.abdullahalenezi">عبدالله العنزي</option>
-<option value="ar.mohamedalenezi">محمد العنزي</option>
-<option value="ar.abdulrahmanalenezi">عبدالرحمن العنزي</option>
-<option value="ar.abdullahaldosari">عبدالله الدوسري</option>
-<option value="ar.mohamedaldosari">محمد الدوسري</option>
-<option value="ar.abdulrahmanaldosari">عبدالرحمن الدوسري</option>
-<option value="ar.abdullahalharbi2">عبدالله الحربي</option>
-<option value="ar.mohamedalharbi2">محمد الحربي</option>
-<option value="ar.abdulrahmanalharbi">عبدالرحمن الحربي</option>
+<option value="ar.alafasy">مشاري العفاسي</option>
+<option value="ar.husary">الحصري</option>
+<option value="ar.minshawi">المنشاوي</option>
 </select>
 
 <select id="surahSelect"></select>
 
 <div id="ayahContainer"></div>
 
-<div class="full-player">
-<h2>🎧 قراءة السورة كاملة</h2>
-<audio id="fullSurahPlayer" controls></audio>
-</div>
+<audio id="player" controls></audio>
 </div>
 
 <script>
-// ------------------- تسجيل الدخول وعد الزوار -------------------
-const loginContainer = document.getElementById("loginContainer");
 const loginBtn = document.getElementById("loginBtn");
-const loginMessage = document.getElementById("loginMessage");
+const loginContainer = document.getElementById("loginContainer");
 const mainContainer = document.getElementById("mainContainer");
-const welcomeUser = document.getElementById("welcomeUser");
-const visitorCountElem = document.getElementById("visitorCount");
 
-let visitors = [];
-
-loginBtn.addEventListener("click", () => {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    if(username && password){
-        visitors.push(username);
-
-        loginContainer.style.display = "none";
-        mainContainer.style.display = "block";
-        welcomeUser.textContent = "مرحباً بك: " + username;
-        visitorCountElem.textContent = "عدد الزوار: " + visitors.length;
-
-        const header = document.querySelector("header");
-        header.textContent = `📖 القرآن الكريم - مرحباً بك ${username}`;
-    } else {
-        loginMessage.textContent = "من فضلك أدخل اسم المستخدم وكلمة المرور";
-    }
-});
-
-// ------------------- كود القرآن -------------------
 const surahSelect = document.getElementById("surahSelect");
 const reciterSelect = document.getElementById("reciterSelect");
 const ayahContainer = document.getElementById("ayahContainer");
-const fullSurahPlayer = document.getElementById("fullSurahPlayer");
-const playMode = document.getElementById("playMode");
+const player = document.getElementById("player");
 
-let currentSurahAudios = [];
-let currentIndex = 0;
+let audios = [];
+let index = 0;
+
+// تسجيل الدخول
+loginBtn.onclick = function(){
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    if(user && pass){
+        loginContainer.style.display="none";
+        mainContainer.style.display="block";
+
+        // تحميل الفاتحة تلقائي
+        setTimeout(()=>{
+            surahSelect.value = 1;
+            loadSurah();
+        },300);
+
+    }else{
+        document.getElementById("loginMessage").textContent="ادخل البيانات";
+    }
+};
 
 // تحميل السور
 fetch("https://api.alquran.cloud/v1/surah")
-.then(res => res.json())
-.then(data => {
-    data.data.forEach(surah => {
-        let option = document.createElement("option");
-        option.value = surah.number;
-        option.textContent = surah.number + " - " + surah.name;
-        surahSelect.appendChild(option);
+.then(res=>res.json())
+.then(data=>{
+    data.data.forEach(s=>{
+        let op=document.createElement("option");
+        op.value=s.number;
+        op.textContent=s.number+" - "+s.name;
+        surahSelect.appendChild(op);
     });
 });
 
-surahSelect.addEventListener("change", loadSurah);
-reciterSelect.addEventListener("change", loadSurah);
-playMode.addEventListener("change", loadSurah);
+// تغيير السورة أو القارئ
+surahSelect.onchange = loadSurah;
+reciterSelect.onchange = loadSurah;
 
 function loadSurah(){
-    let surahNumber = surahSelect.value;
+    let surah = surahSelect.value;
     let reciter = reciterSelect.value;
-    if(!surahNumber) return;
 
-    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${reciter}`)
-    .then(res => res.json())
-    .then(data => {
-        ayahContainer.innerHTML = "";
-        currentSurahAudios = [];
+    fetch(`https://api.alquran.cloud/v1/surah/${surah}/${reciter}`)
+    .then(res=>res.json())
+    .then(data=>{
+        ayahContainer.innerHTML="";
+        audios=[];
 
-        data.data.ayahs.forEach((ayah,index)=>{
-            currentSurahAudios.push(ayah.audio);
-            let div = document.createElement("div");
-            div.className = "ayah";
-            div.innerHTML = ayah.text;
+        data.data.ayahs.forEach((a)=>{
+            audios.push(a.audio);
 
-            if(playMode.value === "separate"){
-                let audio = document.createElement("audio");
-                audio.controls = true;
-                audio.src = ayah.audio;
-                div.appendChild(audio);
-
-                if(index===0){
-                    setTimeout(()=>audio.play().catch(()=>{}),500);
-                }
-            }
+            let div=document.createElement("div");
+            div.className="ayah";
+            div.textContent=a.text;
             ayahContainer.appendChild(div);
         });
 
-        if(playMode.value==="full") playFullSurah();
-        else { fullSurahPlayer.pause(); fullSurahPlayer.src=""; }
+        playAll();
     });
 }
 
-function playFullSurah(){
-    if(currentSurahAudios.length===0) return;
-    currentIndex=0;
-    fullSurahPlayer.src = currentSurahAudios[currentIndex];
-    fullSurahPlayer.play().catch(()=>{});
-    fullSurahPlayer.onended = function(){
-        currentIndex++;
-        if(currentIndex<currentSurahAudios.length){
-            fullSurahPlayer.src=currentSurahAudios[currentIndex];
-            fullSurahPlayer.play().catch(()=>{});
+// تشغيل كل الآيات
+function playAll(){
+    if(audios.length===0) return;
+
+    index=0;
+    player.src=audios[index];
+
+    player.play().catch(()=>{});
+
+    player.onended=function(){
+        index++;
+        if(index<audios.length){
+            player.src=audios[index];
+            player.play();
         }
     }
 }
 </script>
-<script>
-    function sendMail()
-    {
-        const name = document.getElementById("username");
-        const mail = document.getElementById("usermail");
-        
-        emailjs.send("service_6z59c5o","template_f83tfgh",{
-            name: name.value,
-            email: mail.value,
-        });
-    }
-</script>
+
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
